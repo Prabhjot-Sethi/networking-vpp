@@ -95,7 +95,7 @@ something like this::
     SERVICE_PASSWORD=$ADMIN_PASSWORD
 
     disable_service q-agt # we're not using OVS or LB
-    enable_plugin networking-vpp https://github.com/openstack/networking-vpp
+    enable_plugin networking-vpp https://github.com/Prabhjot-Sethi/networking-vpp.git
     Q_PLUGIN=ml2
     Q_USE_SECGROUP=True
     Q_ML2_PLUGIN_MECHANISM_DRIVERS=vpp
