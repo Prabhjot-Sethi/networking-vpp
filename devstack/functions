@@ -21,11 +21,13 @@ EOF
   fi
   # stack fails without this package, ensuring it's installed
   install_package bridge-utils
-  install_package vpp
   # python api package name was renamed in 17.04, try to install both
   install_package vpp-python-api || install_package vpp-api-python
   # plugins are required to support security groups
   install_package vpp-plugins
+  # vpp install runs the service automatically so install vpp after api and
+  # plugin install so it picks the plugins correctly
+  install_package vpp
   if is_set VPP_STARTUP_CONFIG; then
       if [[ -f "$VPP_STARTUP_CONFIG" && -r "$VPP_STARTUP_CONFIG" ]]; then
           sudo cp -f /etc/vpp/startup.conf /etc/vpp/startup.conf.devstack_bak
@@ -34,6 +36,8 @@ EOF
           die $LINENO "VPP config file $VPP_STARTUP_CONFIG not a file or unreadable"
       fi
   elif is_set VPP_INT_PCI_DEV; then
+      # lets save a copy of original vpp startup conf file
+      sudo cp -f /etc/vpp/startup.conf /etc/vpp/startup.conf.devstack_bak
       # We have some very poor skills hacking this file - we add but don't substitute
       # and we don't make any attempt to parse the file, so this works with default
       # configs and not generally otherwise

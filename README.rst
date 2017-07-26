@@ -88,6 +88,12 @@ something like this::
     # (about 5GB of memory) which works well in my 8GB test VM.
     NR_HUGEPAGES=2500
 
+    ADMIN_PASSWORD=secret123
+    DATABASE_PASSWORD=$ADMIN_PASSWORD
+    RABBIT_PASSWORD=$ADMIN_PASSWORD
+    SERVICE_TOKEN=$ADMIN_PASSWORD
+    SERVICE_PASSWORD=$ADMIN_PASSWORD
+
     disable_service q-agt # we're not using OVS or LB
     enable_plugin networking-vpp https://github.com/openstack/networking-vpp
     Q_PLUGIN=ml2
@@ -97,6 +103,8 @@ something like this::
     Q_ML2_TENANT_NETWORK_TYPE=vlan
     ML2_VLAN_RANGES=physnet:100:200
     MECH_VPP_PHYSNETLIST=physnet:tap-0
+
+    VPP_BRANCH=stable.1704
 
     [[post-config|$NOVA_CONF]]
     [DEFAULT]
